@@ -10,7 +10,7 @@ form{
     margin: 50px auto;
     width: 600px;
 }
-input[type=text], input[type=password]{
+input[type=text], input[type=password], input[type=date]{
     padding: 10px;
     width: 250px;
 }
@@ -61,8 +61,11 @@ input[type=text], input[type=password]{
       <?php
 if(isset($_POST['nombre'])){
 $nombre = $_POST['nombre'];
+$nusuario = $_POST['nombre2'];
 $password = $_POST['password'];
 $email = $_POST['email'];
+$date = $_POST['date'];
+$pass = $_POST['pass'];
 
 $campos = array();
 
@@ -77,6 +80,16 @@ if($password == "" || strlen($password) < 6) {
 if($email == "" || strpos($email, "@") === false){
    array_push($campos, "Ingresa un correo electrónico válido.");
 }
+if ($password != $pass){
+  array_push($campos, "La contraseña no es igual al campo anterior.");
+}
+if(ctype_graph($password) === false){
+  array_push($campos, "Ingresa contraseña sin espacios.");
+}
+
+if(mysqli_num_rows(verificar_usuario($nusuario)) !== 0){
+  array_push($campos, "Este nombre de usuario ya esta en uso.");
+}
 
 if(count($campos) > 0){
     echo "<div class='error'>";
@@ -84,8 +97,11 @@ if(count($campos) > 0){
         echo "<li>".$campos[$i]."</i>";
     }
 }else{
+
+  $reg=registro($nombre,$nusuario,$email,$date,$password);
     echo "<div class='correcto'>
            Datos correctos";
+           echo $reg;
            
 }
 echo "</div>";
@@ -106,7 +122,7 @@ echo "</div>";
   <div class="row mb-4">
     <div class="col">
       <div class="form-outline">
-        <input minlength="2" maxlength="15" pattern="[a-z,A-Z]+" required="" type="text" name="nombre" class="form-control" placeholder="Nombre"/>
+        <input minlength="2" maxlength="15" pattern="[a-z,A-Z,*\s]+" required="" type="text" name="nombre" class="form-control" placeholder="Nombre"/>
       </div>
     </div>
     <div class="col">
@@ -123,20 +139,21 @@ echo "</div>";
     </div>
     <div class="col">
       <div class="form-outline">
-        <input required="" pattern="[0-9]+" type="text" id="form3Example2" name="date" class="form-control" placeholder="Fecha de nacimiento"/>
+        <input min="1922-10-01" max="2022-10-28" required="" pattern="[0-9]+" type="date" id="form3Example2" name="date" class="form-control" placeholder="Fecha de nacimiento"/>
+        
       </div>
     </div>
   </div>
   <div class="row mb-4">
     <div class="col">
       <div class="form-outline">
-        <input minlength="6" maxlength="12" pattern="[a-z,A-Z,0-9]+" required="" type="text"  name="password" class="form-control" placeholder="Contrase&ntilde;a"/>
+        <input minlength="6" maxlength="12" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[#|!|=|_|-|@]).{6,}[^\s]$" required type="password"  name="password" class="form-control" placeholder="Contrase&ntilde;a"/>
         <span id="mensaje"></span>
       </div>
     </div>
     <div class="col">
       <div class="form-outline">
-        <input  type="password" id="password" name="pass" required="" placeholder="Repetir contrase&ntilde;a"/>
+        <input  type="password" name="pass" required="" placeholder="Repetir contrase&ntilde;a"/>
       </div>
     </div>
   </div>
@@ -161,13 +178,13 @@ echo "</div>";
         <!-- Register buttons -->
 
       </form>
-      <ul>
+    <!--  <ul>
     <li id="mayus">3 Mayúsculas</li>
     <li id="special">3 Caractér especial</li>
     <li id="numbers">digitos</li>
     <li id="lower"> Minúsculas</li>
     <li id="len"> Mínimo 8 caractéres</li>
- </ul>
+ </ul> -->
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>

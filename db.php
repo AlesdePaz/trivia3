@@ -20,16 +20,6 @@ function conn(){
             return $mostrar;
         }
 
-        function registro($nombre, $email, $fecha_de_nacimiento, $contraseña){
-          $conectar=conn();
-          $sql="INSERT INTO usuario (nombre, email, fecha_de_nacimiento, contraseña) VALUES 
-          ('$nombre', '$email', '$fecha_de_nacimiento', '$contraseña');";
-          $resul = mysqli_query($conectar , $sql)or trigger_error("Query Failed! SQL- Error: ".mysqli_error($conectar), E_USER_ERROR);
-
-          $mostrar=mysqli_fetch_array($resul);
-          return $mostrar;
-      }
-
         //buscando pregunta
         function question($num){
             $conectar=conn();
@@ -63,4 +53,23 @@ function conn(){
       </tr>
       <?php
     }*/
+
+    function registro($nombrebd,$nusuariobd,$emailbd,$datebd,$passwordbd){
+      $conectar=conn();
+      $sql="INSERT INTO usuario (nombre, nombreusuario, correousuario, fechadenacimiento, contrasena) VALUES ('$nombrebd','$nusuariobd','$emailbd','$datebd','$passwordbd');";
+      $resul = mysqli_query($conectar , $sql)or trigger_error("Query Failed! SQL- Error: ".mysqli_error($conectar), E_USER_ERROR);
+
+      $mostrar ="<div class='correcto'>
+      Su usuario ha sido creado :) </div>";
+      return $mostrar;
+    }
+
+    function verificar_usuario($usuariodb){
+      $conectar=conn();
+      $sql="SELECT * FROM usuario WHERE nombreusuario = '$usuariodb';";
+      $resul = mysqli_query($conectar , $sql)or trigger_error("Query Failed! SQL- Error: ".mysqli_error($conectar), E_USER_ERROR);
+
+      return $resul;
+    }
+
       ?>

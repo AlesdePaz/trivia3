@@ -29,6 +29,8 @@
             </div>
           </nav>
           <?php       
+          
+          while($i<3){
             echo '
           
           <div class="container">
@@ -66,6 +68,7 @@
              echo $i;
             }
           }
+        }
  ?>
           
       <!-- <center><button onclick="corregir()">ACEPTAR</button></center>
