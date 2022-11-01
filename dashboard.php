@@ -1,10 +1,32 @@
+<?php
+date_default_timezone_set("America/Guatemala");
+session_start();
+
+$Object = new DateTime();  
+$DateAndTime = $Object->format("Y-m-d h:i:s");  
+echo "la fecha actual es $DateAndTime.";
+
+$ultimo_juego = $_SESSION['fecha'];
+$nombredash = $_SESSION['nombre'];
+
+echo "$ultimo_juego.";
+if($DateAndTime > $ultimo_juego){
+  echo " ya pasaste el tiempo";
+}else{
+  echo "no es mayor";
+}
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Actividad 4</title>
+        <title>Dashboard</title>
         <link rel="stylesheet" href="styles.css"/>
     </head>
     <body>
+      <?php
+    include('db.php');
+      ?>
         <div class="collapse" id="navbarToggleExternalContent">
             <div class="bg-dark p-4">
                 <ul class="list-group">
@@ -23,18 +45,18 @@
               </button>
             </div>
           </nav>
-          <!-- buscar amigos -->
+          <!-- buscar amigos 
         <div class="card" style="margin: auto; margin-top: 0px; width: 20%">  
           <div class="form-outline mb-4">
             <input type="text" id="form3Example1" class="form-control" placeholder="Buscar amigos"/>
           </div>
-          </div>
+          </div> -->
           <!-- dashboard -->
           <div class="card" style="margin: auto; margin-top: 80px; width: 50%">
           <div class="row mb-4">
             <div class="col">
               <div class="form-outline">
-                Nombre
+                <?php echo $nombredash; ?>
                 <div></div>
                 <img src="trofeo.png"
                 width="150" 
@@ -51,12 +73,12 @@
             <div class="col">
               <div class="form-outline">
                 <br>
-                <img src="questionmark.png"
+                <img src="feliz.gif"
                 width="150" 
                 height="150">
                 <div></div>
                 <br>
-                <a href="trivia.html"><button style="text-align: center ;" type="button" class="btn btn-primary btn-block mb-4">Jugar</button></a>
+                <a href="fecha_de_juego.php"><button style="text-align: center ;" type="button" class="btn btn-primary btn-block mb-4">Jugar</button></a>
                 <div></div>
                 <img src="estrellas.png"
                 width="160" 

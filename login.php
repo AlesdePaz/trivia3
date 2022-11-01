@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Registro</title>
+    <title>Login</title>
     <style>
       body{background-color: #264673; box-sizing: border-box; font-family: Arial;}
 form{
     background-color: white;
     padding: 10px;
     margin: 50px auto;
-    width: 600px;
+    width: 280px;
 }
 input[type=text], input[type=password], input[type=date]{
     padding: 10px;
@@ -59,36 +59,15 @@ input[type=text], input[type=password], input[type=date]{
 
       <form action="" method="POST">
       <?php
-if(isset($_POST['nombre'])){
-$nombre = $_POST['nombre'];
+      session_start();
+if(isset($_POST['nombre2'])){
 $nusuario = $_POST['nombre2'];
 $password = $_POST['password'];
-$email = $_POST['email'];
-$date = $_POST['date'];
-$pass = $_POST['pass'];
 
 $campos = array();
 
-if($nombre == ""){
-   array_push($campos, "El campo Nombre no pude estar vacío");
-}
-
-if($password == "" || strlen($password) < 6) {
-   array_push($campos, "El campo Password no puede estar vacío, ni tener menos de 6 caracteres.");
-}
-
-if($email == "" || strpos($email, "@") === false){
-   array_push($campos, "Ingresa un correo electrónico válido.");
-}
-if ($password != $pass){
-  array_push($campos, "La contraseña no es igual al campo anterior.");
-}
-if(ctype_graph($password) === false){
-  array_push($campos, "Ingresa contraseña sin espacios.");
-}
-
-if(mysqli_num_rows(verificar_usuario($nusuario)) !== 0){
-  array_push($campos, "Este nombre de usuario ya esta en uso.");
+if(mysqli_num_rows(verificar_usuario_contra($nusuario, $password)) === 0){
+  array_push($campos, "ingresa los datos del usuario validos.");
 }
 
 if(count($campos) > 0){
@@ -98,18 +77,42 @@ if(count($campos) > 0){
     }
 }else{
 
-  $reg=registro($nombre,$nusuario,$email,$date,$password);
     echo "<div class='correcto'>
            Datos correctos";
-           echo $reg;
+           $conectar=conn();
+             $sql="SELECT * FROM usuario WHERE nombreusuario = '$nusuario' and contrasena = '$password';";
+               $resul = mysqli_query($conectar , $sql)or trigger_error("Query Failed! SQL- Error: ".mysqli_error($conectar), E_USER_ERROR);
+
+              $num = $resul->num_rows;
+
+              if($num>0){
+                $row = $resul->fetch_assoc();
+
+                $_SESSION['nombre'] = $row['nombre'];
+                $_SESSION['idusuario'] = $row['idusuario'];
+
+                $id = $_SESSION['idusuario'];
+
+                $sqli="SELECT * FROM fechadejuegodb WHERE idusuario = '$id';";
+                $resulta = mysqli_query($conectar , $sqli)or trigger_error("Query Failed! SQL- Error: ".mysqli_error($conectar), E_USER_ERROR);
+               $numm = $resulta->num_rows;
+ 
+               if($numm>0){
+                 $rows = $resulta->fetch_assoc();
+ 
+                 $_SESSION['fecha'] = $rows['fechajuego'];
+
+                header("Location:dashboard.php");
+              }
            
+}
 }
 echo "</div>";
 }
 
 ?>
         <div class="d-flex justify-content-center">
-          <h2>Registro</h2>
+          <h2>Inicio de sesi&oacute;n</h2>
           </div>
         <div class="d-flex justify-content-center">
           <img src="avatar.png" />
@@ -121,25 +124,7 @@ echo "</div>";
   <div class="row mb-4">
     <div class="col">
       <div class="form-outline">
-        <input minlength="2" maxlength="15" pattern="[a-z,A-Z,*\s]+" required="" type="text" name="nombre" class="form-control" placeholder="Nombre"/>
-      </div>
-    </div>
-    <div class="col">
-      <div class="form-outline">
         <input minlength="2" maxlength="15" pattern="[a-z,A-Z]+" required="" type="text" name="nombre2" class="form-control" placeholder="Nombre de usuario" />
-      </div>
-    </div>
-  </div>
-  <div class="row mb-4">
-    <div class="col">
-      <div class="form-outline">
-        <input minlength="5" maxlength="30" type="text" required="" name="email" class="form-control"placeholder="Correo electronico"/>
-      </div>
-    </div>
-    <div class="col">
-      <div class="form-outline">
-        <input min="1922-10-01" max="2022-10-28" required="" pattern="[0-9]+" type="date" id="form3Example2" name="date" class="form-control" placeholder="Fecha de nacimiento"/>
-        
       </div>
     </div>
   </div>
@@ -148,11 +133,6 @@ echo "</div>";
       <div class="form-outline">
         <input minlength="6" maxlength="12" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[#|!|=|_|-|@]).{6,}[^\s]$" required type="password"  name="password" class="form-control" placeholder="Contrase&ntilde;a"/>
         <span id="mensaje"></span>
-      </div>
-    </div>
-    <div class="col">
-      <div class="form-outline">
-        <input  type="password" name="pass" required="" placeholder="Repetir contrase&ntilde;a"/>
       </div>
     </div>
   </div>
@@ -165,14 +145,14 @@ echo "</div>";
            
         <!-- Submit button -->
         <div class="d-flex justify-content-center">
-          <p><input type="submit" value="Registrarme"></p>
+          <p><input type="submit" value="Ingresar"></p>
         <!--<button style="text-align: center ;" type="button" class="btn btn-primary btn-block mb-4 " id="subirUsuario">Registrarme</button> -->
         </div>
         <div class="d-flex justify-content-center">
-          Ya tienes una cuenta?
+          ¿No tienes una cuenta?
           </div>
           <div class="d-flex justify-content-center">
-        <a href="login.php"><button style="text-align: center ;" type="button" class="btn btn-primary btn-block mb-4 ">Iniciar sesi&oacute;n</button></a>
+        <a href="registro_1.php"><button style="text-align: center ;" type="button" class="btn btn-primary btn-block mb-4 ">Crear cuenta</button></a>
           </div>
         <!-- Register buttons -->
 
