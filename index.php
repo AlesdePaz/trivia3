@@ -32,7 +32,7 @@
           
           while($i<3){
             echo '
-          
+
           <div class="container">
           <section><h2>';
             

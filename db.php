@@ -1,4 +1,8 @@
 <?php
+
+
+
+
 $i=1;
 //configuracion necesaria para acceder a la base de datos 
 function conn(){
@@ -68,6 +72,14 @@ function conn(){
       $conectar=conn();
       $sql="SELECT * FROM usuario WHERE nombreusuario = '$usuariodb';";
       $resul = mysqli_query($conectar , $sql)or trigger_error("Query Failed! SQL- Error: ".mysqli_error($conectar), E_USER_ERROR);
+
+      return $resul;
+    }
+    function verificar_usuario_contra($usuariodb, $contradb){
+      $conectar=conn();
+      $sql="SELECT * FROM usuario WHERE nombreusuario = '$usuariodb' and contrasena = '$contradb';";
+      $resul = mysqli_query($conectar , $sql)or trigger_error("Query Failed! SQL- Error: ".mysqli_error($conectar), E_USER_ERROR);
+
 
       return $resul;
     }
