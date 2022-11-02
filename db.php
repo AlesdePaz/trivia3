@@ -84,4 +84,16 @@ function conn(){
       return $resul;
     }
 
+    function verificar_nivel($idusuariobd){
+      $conectar=conn();
+      $sql="SELECT nivel FROM usuario WHERE idusuario = '$idusuariobd';";
+      $resul = mysqli_query($conectar , $sql)or trigger_error("Query Failed! SQL- Error: ".mysqli_error($conectar), E_USER_ERROR);
+        
+      $num = $resul->num_rows;
+        if($num>0){
+          $row = $resul->fetch_assoc();
+        }
+        return $row['nivel'];
+    }
+
       ?>

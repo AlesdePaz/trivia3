@@ -30,11 +30,11 @@ if($DateAndTime > $ultimo_juego){
         <div class="collapse" id="navbarToggleExternalContent">
             <div class="bg-dark p-4">
                 <ul class="list-group">
-                    <li class="list-group-item bg-dark"><a href="perfil.html" class="linkfachero link-light">Perfil</a></li>
-                    <li class="list-group-item bg-dark text-white"><a href="trivia.html" class="linkfachero link-light">Trivia</a></li>
+                    <li class="list-group-item bg-dark"><a href="dashboard.php" class="linkfachero link-light">Perfil</a></li>
+                    <li class="list-group-item bg-dark text-white"><a href="trivia.php" class="linkfachero link-light">Trivia</a></li>
                     <li class="list-group-item bg-dark text-white"><a href="ranking.html" class="linkfachero link-light">Ranking</a></li>
                     <li class="list-group-item bg-dark text-white"><a href="misamigos.html" class="linkfachero link-light">Mis amigos</a></li>
-                    <li class="list-group-item bg-dark text-white"><a href="login.html" class="linkfachero link-light">Cerrar sesión</a></li>
+                    <li class="list-group-item bg-dark text-white"><a href="login.php" class="linkfachero link-light">Cerrar sesi&oacute;n</a></li>
                 </ul>
             </div>
           </div>
@@ -78,7 +78,7 @@ if($DateAndTime > $ultimo_juego){
                 height="150">
                 <div></div>
                 <br>
-                <a href="fecha_de_juego.php"><button style="text-align: center ;" type="button" class="btn btn-primary btn-block mb-4">Jugar</button></a>
+                <a href="trivia.php"><button style="text-align: center ;" type="button" class="btn btn-primary btn-block mb-4">Jugar</button></a>
                 <div></div>
                 <img src="estrellas.png"
                 width="160" 

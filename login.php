@@ -44,7 +44,7 @@ input[type=text], input[type=password], input[type=date]{
                     <li class="list-group-item bg-dark text-white"><a href="trivia.html" class="linkfachero link-light">Trivia</a></li>
                     <li class="list-group-item bg-dark text-white"><a href="ranking.html" class="linkfachero link-light">Ranking</a></li>
                     <li class="list-group-item bg-dark text-white"><a href="misamigos.html" class="linkfachero link-light">Mis amigos</a></li>
-                    <li class="list-group-item bg-dark text-white"><a href="login.html" class="linkfachero link-light">Registrarme</a></li>
+                    <li class="list-group-item bg-dark text-white"><a href="registro_1.php" class="linkfachero link-light">Registrarme</a></li>
                 </ul>
             </div>
           </div>

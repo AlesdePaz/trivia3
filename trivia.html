@@ -4,20 +4,34 @@
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trivia</title>
+    <style>
+  input[type="submit"]{
+    border: 0;
+    background-color: #ED8824;
+    padding: 10px 20px;
+}
+ .error{
+    background-color: #FF9185;
+    font-size: 12px;
+    padding: 10px;
+ }
+ .correcto{
+    background-color: #A0DEA7;
+    font-size: 12px;
+    padding: 10px;
+ }
+    </style>
      <link rel="stylesheet" href="estilo.css">
  </head>
     <body>
-      <?php
-    include('db.php');
-      ?>
         <div class="collapse" id="navbarToggleExternalContent">
-            <div class="bg-dark p-4">
+            <div class="bg-dark p-4"> 
                 <ul class="list-group">
-                    <li class="list-group-item bg-dark"><a href="perfil.html" class="linkfachero link-light">Perfil</a></li>
-                    <li class="list-group-item bg-dark text-white"><a href="trivia.html" class="linkfachero link-light">Trivia</a></li>
+                    <li class="list-group-item bg-dark"><a href="dashboard.php" class="linkfachero link-light">Perfil</a></li>
+                    <li class="list-group-item bg-dark text-white"><a href="trivia.php" class="linkfachero link-light">Trivia</a></li>
                     <li class="list-group-item bg-dark text-white"><a href="ranking.html" class="linkfachero link-light">Ranking</a></li>
                     <li class="list-group-item bg-dark text-white"><a href="misamigos.html" class="linkfachero link-light">Mis amigos</a></li>
-                    <li class="list-group-item bg-dark text-white"><a href="registro.php" class="linkfachero link-light">Registrarme</a></li>
+                    <li class="list-group-item bg-dark text-white"><a href="login.php" class="linkfachero link-light">Cerrar sesi&oacute;n</a></li>
                 </ul>
             </div>
           </div>
@@ -28,41 +42,24 @@
               </button>
             </div>
           </nav>
-          <?php     
-            echo '
 
           <div class="container">
-          <section><h2>';
-
-          $Q=question($i); $R=R_($i); echo $Q["pregunta"]; echo '</h2></section>
+          <section><h2>:pregunta:</h2></section>
          <form method="POST" action="">
             
             <div><label>
-                <input type="radio" value="1" name="p0" onclick="respuesta(0,this)"> Turín
+                <input type="radio" value=":respuesta__1:" name="p0">:respuesta1:
             </label></div>
             <div><label>
-                <input type="radio" value="2" name="p0" onclick="respuesta(0,this)"> napoleon
+                <input type="radio" value=":respuesta__2:" name="p0">:respuesta2:
               </label></div>
               <div><label>
-                <input type="radio" value="'; echo $R["respuesta"]; echo '" name="p0" onclick="respuesta(0,this)"> '; echo $R["respuesta"]; echo '
+                <input type="radio" value=":respuesta__3:" name="p0">:respuesta3:
             </label></div>
 
-            <input type="submit" value="Enviar" name="enviar" v-on:click="corregir"> <br/> <br/>
+            <input type="submit" value="Enviar" name="enviar"> <br/> <br/>
 
-
-</form>';
-            if(isset($_POST["p0"])){
-              if($_POST["p0"] == $R['respuesta']){
-         echo "Mi idioma es ". $_POST["p0"];
-         $i++;
-                echo $i;
-            }else{
-              echo "seleccione la correcta";
-             $i++;
-             echo $i;
-            }
-          }
- ?>
+</form>
           
       <!-- <center><button onclick="corregir()">ACEPTAR</button></center>
         <h2>Cantidad acertadas: <span id="resultado"></span></h2> -->
