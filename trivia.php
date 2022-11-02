@@ -6,6 +6,7 @@ if(isset($_SESSION['idusuario'])){
   $ntrivia = $_SESSION['nombre'];
   $idtrivia = $_SESSION['idusuario'];
   $nivel = intval(verificar_nivel($idtrivia));
+  $puntos = intval(verificar_puntos($idtrivia));
 }else{
   $nivel = 1;
 }
@@ -35,12 +36,16 @@ $resultado_trivia = "<div class='correcto'>Respuesta Correcta</div>";
 $nivel++;
 //echo $nivel;
 if(isset($_SESSION['idusuario']) && $nivel<=10){
+  $puntos += 3;
 $conectar=conn();
-    $sql="UPDATE usuario SET nivel='$nivel' WHERE idusuario='$idtrivia';";
+    $sql="UPDATE usuario SET nivel='$nivel', puntos='$puntos' WHERE idusuario='$idtrivia';";
+    $sql_puntos="UPDATE usuario SET ult_jugada=now() WHERE idusuario='$idtrivia';";
     $resul = mysqli_query($conectar , $sql)or trigger_error("Query Failed! SQL- Error: ".mysqli_error($conectar), E_USER_ERROR);
+    $resul_puntos = mysqli_query($conectar , $sql_puntos)or trigger_error("Query Failed! SQL- Error: ".mysqli_error($conectar), E_USER_ERROR);
     header("Location:trivia.php");
   }elseif(isset($_SESSION['idusuario']) && $nivel>10){
     $resultado_trivia = "<div class='correcto'>FELICITACIONES HAS COMPLETADO TODOS LOS NIVELES</div>";
+    $nivel = $nivel - 1;
   }
 }else{
   $resultado_trivia = "<div class='error'>Respuesta Incorrecta Vuelve a intentarlo</div>";

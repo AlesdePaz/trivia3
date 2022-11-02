@@ -91,19 +91,7 @@ if(count($campos) > 0){
                 $_SESSION['nombre'] = $row['nombre'];
                 $_SESSION['idusuario'] = $row['idusuario'];
 
-                $id = $_SESSION['idusuario'];
-
-                $sqli="SELECT * FROM fechadejuegodb WHERE idusuario = '$id';";
-                $resulta = mysqli_query($conectar , $sqli)or trigger_error("Query Failed! SQL- Error: ".mysqli_error($conectar), E_USER_ERROR);
-               $numm = $resulta->num_rows;
- 
-               if($numm>0){
-                 $rows = $resulta->fetch_assoc();
- 
-                 $_SESSION['fecha'] = $rows['fechajuego'];
-
                 header("Location:dashboard.php");
-              }
            
 }
 }

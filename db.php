@@ -1,9 +1,4 @@
 <?php
-
-
-
-
-$i=1;
 //configuracion necesaria para acceder a la base de datos 
 function conn(){
     $hostname = "localhost";
@@ -35,13 +30,15 @@ function conn(){
         }
 
         //buscando respuesta
-        function R_($num){
+        function comparar_hora($anterior){
           $conectar=conn();
-          $sql="SELECT respuesta FROM preguntas WHERE idpreguntas=$num";
-          $resul = mysqli_query($conectar , $sql)or trigger_error("Query Failed! SQL- Error: ".mysqli_error($conectar), E_USER_ERROR);
+          $sql="SELECT case 
+          when (DATE_ADD('$anterior', interval 2 hour) < now()) then 
+          'triste.gif' else 'feliz.gif' end as 'fecha';";
+          $resul_horas = mysqli_query($conectar , $sql)or trigger_error("Query Failed! SQL- Error: ".mysqli_error($conectar), E_USER_ERROR);
 
-          $mostrar=mysqli_fetch_array($resul);
-          return $mostrar;
+          $mostrar = $resul_horas->fetch_assoc();
+          return $mostrar['fecha'];
       }
 
       /*$conectar=conn();
@@ -94,6 +91,28 @@ function conn(){
           $row = $resul->fetch_assoc();
         }
         return $row['nivel'];
+    }
+    function verificar_puntos($id_puntos){
+      $conectar=conn();
+      $sql="SELECT puntos FROM usuario WHERE idusuario = '$id_puntos';";
+      $resul_puntos = mysqli_query($conectar , $sql)or trigger_error("Query Failed! SQL- Error: ".mysqli_error($conectar), E_USER_ERROR);
+        
+      $num = $resul_puntos->num_rows;
+        if($num>0){
+          $row = $resul_puntos->fetch_assoc();
+        }
+        return $row['puntos'];
+    }
+    function verificar_ultima_jugada($id_jugada){
+      $conectar=conn();
+      $sql="SELECT ult_jugada FROM usuario WHERE idusuario = '$id_jugada';";
+      $resul_jugada = mysqli_query($conectar , $sql)or trigger_error("Query Failed! SQL- Error: ".mysqli_error($conectar), E_USER_ERROR);
+        
+      $num = $resul_jugada->num_rows;
+        if($num>0){
+          $row = $resul_jugada->fetch_assoc();
+        }
+        return $row['ult_jugada'];
     }
 
       ?>
